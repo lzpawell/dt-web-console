@@ -109,7 +109,7 @@ class App extends Component {
           </Sider>
           <Layout style={{ paddingLeft: '10px' }}>
             {this.state.contentHint != undefined ? this.state.contentHint : null}
-            <Content style={{ background: '#fff', margin: 0, minHeight: 280 }}>
+            <Content style={{ background: '#fff', margin: 0, height : '100%' }}>
               {this.state.contentPage}
             </Content>
           </Layout>
