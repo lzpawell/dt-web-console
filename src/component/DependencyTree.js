@@ -24,14 +24,6 @@ class DependencyTree extends Component{
     }
 
     renderDependencyTree(){
-/*        let graph = new G6.Graph({
-            container: 'dependencyTreeCanvas',
-            width:800,
-            height:500
-        });
-        graph.read({roots: [this.state.dependencyTreeData]});
-*/
-
         const FisheyePlugin = G6.Plugins['tool.fisheye'];
 
         //配置边样式
@@ -72,7 +64,6 @@ class DependencyTree extends Component{
             plugins: [
                 new FisheyePlugin({radius: 200})     
             ],
-            minZoom: 0,
             modes: {
                 //拖拽， 缩放
                 default: ['panCanvas', 'wheelZoom']

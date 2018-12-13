@@ -1,5 +1,6 @@
 import React, { Component, Form, Input, Button, } from 'react';
 import DependencyTree from './DependencyTree';
+import DependencyOptionForm from './DependencyOperation';
 import 'antd/dist/antd.css';
 
 class JobDependencyManagement extends Component {
@@ -20,7 +21,11 @@ class JobDependencyManagement extends Component {
   render() {
     return (
       <div style={{height:'100%'}}>
-        <DependencyTree dependencyTreeData={this.state.dependencyTreeData} style={{height:'100%'}}/>
+        <div style={{height:'15%', paddingLeft : '40px', paddingTop : '30px'}}>
+          <DependencyOptionForm />
+        </div>
+        
+        <DependencyTree dependencyTreeData={this.state.dependencyTreeData} style={{height:'75%'}}/>
       </div>
     );
   }

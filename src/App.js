@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Layout, Menu, Breadcrumb, Icon, Dropdown, Button, Row, Col } from 'antd';
 import 'antd/dist/antd.css';
+import {Link} from 'react-router-dom';
 import JobManagement from './component/JobManagement';
 import JobDependencyManagement from './component/JobDependencyManagement';
 import AppTitle from './component/AppTitle';
@@ -100,9 +101,9 @@ class App extends Component {
         </Header>
         <Layout style={{ height: '100%'}}>
           <Sider width={200} style={{ background: '#fff' }}>
-            <Menu
-              style={{ height: '100%', borderRight: 0 }}
-            >
+            <Menu style={{ height: '100%', borderRight: 0 }}>
+              <Menu.Item key="3" ><Link to="/jobManagement">job管理</Link></Menu.Item>
+              <Menu.Item key="4" ><Link to="/jobDependencyManagement">job依赖</Link></Menu.Item>
               <Menu.Item key="1" onClick={this.onOpenContent.bind(this, 'JobManagement')}>job管理</Menu.Item>
               <Menu.Item key="2" onClick={this.onOpenContent.bind(this, 'JobDependencyManagement')}>job依赖</Menu.Item>
             </Menu>
@@ -110,7 +111,7 @@ class App extends Component {
           <Layout style={{ paddingLeft: '10px' }}>
             {this.state.contentHint != undefined ? this.state.contentHint : null}
             <Content style={{ background: '#fff', margin: 0, height : '100%' }}>
-              {this.state.contentPage}
+              
             </Content>
           </Layout>
         </Layout>
