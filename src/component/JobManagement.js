@@ -5,7 +5,7 @@ class JobManagement extends Component {
   render() {
     return (
       <div>
-        job management
+        job management + {this.props.balal}
       </div>
     );
   }

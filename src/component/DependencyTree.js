@@ -7,6 +7,8 @@ import 'antd/dist/antd.css';
 /**
  * job依赖树结构
  */
+const FisheyePlugin = G6.Plugins['tool.fisheye'];
+
 
 class DependencyTree extends Component{
 
@@ -15,16 +17,6 @@ class DependencyTree extends Component{
         this.state = {
             dependencyTreeData: props.dependencyTreeData
         };
-    }
-    componentWillReceiveProps(nextProps) {
-        if(nextProps.dependencyTreeData != undefined){
-            this.setState({dependencyTreeData: nextProps.dependencyTreeData}, this.renderDependencyTree);
-            setTimeout(this.renderDependencyTree, 1000);
-        }
-    }
-
-    renderDependencyTree(){
-        const FisheyePlugin = G6.Plugins['tool.fisheye'];
 
         //配置边样式
         G6.registerNode('dependencyTreeCanvas', {
@@ -42,68 +34,94 @@ class DependencyTree extends Component{
               return [['M', start.x, start.y], ['C', start.x - hgap / 4, start.y, end.x + hgap / 2, end.y, end.x, end.y]];
             }
         });
+    }
+    componentWillReceiveProps(nextProps) {
+
+        if(nextProps.dependencyTreeData != undefined){
+            this.setState({dependencyTreeData: nextProps.dependencyTreeData}, this.renderDependencyTree);
+            //setTimeout(this.renderDependencyTree, 1000);
+        }
+    }
+
+    tree = undefined;
+    renderDependencyTree(){
+        if(this.tree == undefined){
+            var layout = new G6.Layouts.CompactBoxTree({
+                // direction: 'LR', // 方向（LR/RL/H/TB/BT/V）
+                getHGap: function getHGap() {
+                  // 横向间距
+                  return 100;
+                },
+                getVGap: function getVGap() {
+                  // 竖向间距
+                  return 10;
+                }
+            });
+    
+            this.tree = new G6.Tree({
+                id: 'dependencyTreeCanvas', // 容器ID
+                //height: window.innerHeight, // 画布高
+                layout: layout,
+                fitView: 'autoZoom',
+                plugins: [
+                    new FisheyePlugin({radius: 200})     
+                ],
+                modes: {
+                    //拖拽， 缩放
+                    default: ['panCanvas', 'wheelZoom']
+                }
+            });
+    
+            this.tree.node({
+                shape: 'treeNode',
+                size: 10,
+                label: function label(model) {
+                  if (model.children && model.children.length > 0) {
+                    return {
+                      text: model.name,
+                      textAlign: 'right'
+                    };
+                  }
+                  return {
+                    text: model.name,
+                    textAlign: 'left'
+                  };
+                },
+                labelOffsetX: function labelOffsetX(model) {
+                  if (model.children && model.children.length > 0) {
+                    return -10;
+                  }
+                  return 10;
+                }
+            }).style({
+                fillOpacity: 1
+              });
+            this.tree.edge({
+                shape: 'smooth'
+            });
+            
+        }else{
+            
+        }
+    }
 
 
-        var layout = new G6.Layouts.CompactBoxTree({
-            // direction: 'LR', // 方向（LR/RL/H/TB/BT/V）
-            getHGap: function getHGap() {
-              // 横向间距
-              return 100;
-            },
-            getVGap: function getVGap() {
-              // 竖向间距
-              return 10;
-            }
-        });
-
-        var tree = new G6.Tree({
-            id: 'dependencyTreeCanvas', // 容器ID
-            //height: window.innerHeight, // 画布高
-            layout: layout,
-            fitView: 'autoZoom',
-            plugins: [
-                new FisheyePlugin({radius: 200})     
-            ],
-            modes: {
-                //拖拽， 缩放
-                default: ['panCanvas', 'wheelZoom']
-            }
-        });
-
-        tree.node({
-            shape: 'treeNode',
-            size: 10,
-            label: function label(model) {
-              if (model.children && model.children.length > 0) {
-                return {
-                  text: model.name,
-                  textAlign: 'right'
-                };
-              }
-              return {
-                text: model.name,
-                textAlign: 'left'
-              };
-            },
-            labelOffsetX: function labelOffsetX(model) {
-              if (model.children && model.children.length > 0) {
-                return -10;
-              }
-              return 10;
-            }
-        }).style({
-            fillOpacity: 1
-          });
-        tree.edge({
-            shape: 'smooth'
-        });
-        tree.read({
-            roots: [this.state.dependencyTreeData]
+    renderData = (data)=>{
+        this.tree.read({
+            roots: [data]
         });
     }
 
     render(){
         setTimeout(this.renderDependencyTree.bind(this), 1000);
+        setTimeout(()=>{
+            this.renderData({'name' : 'roota', children : [{'name' : 'balala'}] });
+        }, 6000);
+
+        setTimeout(()=>{
+            this.renderData(this.state.dependencyTreeData);
+        }, 3000);
+        
         return (<div id="dependencyTreeCanvas" style={{width : "100%", height : "100%"}}></div>);
     }
 }
