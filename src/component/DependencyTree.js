@@ -38,13 +38,15 @@ class DependencyTree extends Component{
     componentWillReceiveProps(nextProps) {
 
         if(nextProps.dependencyTreeData != undefined){
-            this.setState({dependencyTreeData: nextProps.dependencyTreeData}, this.renderDependencyTree);
+            //this.setState({dependencyTreeData: nextProps.dependencyTreeData}, this.renderDependencyTree);
             //setTimeout(this.renderDependencyTree, 1000);
+            //this.renderData(nextProps.dependencyTreeData);
+            this.renderData(nextProps.dependencyTreeData);
         }
     }
 
     tree = undefined;
-    renderDependencyTree(){
+    initDependencyTreeContainer = ()=>{
         if(this.tree == undefined){
             var layout = new G6.Layouts.CompactBoxTree({
                 // direction: 'LR', // 方向（LR/RL/H/TB/BT/V）
@@ -107,20 +109,24 @@ class DependencyTree extends Component{
 
 
     renderData = (data)=>{
+        if(this.tree == undefined){
+            this.initDependencyTreeContainer();
+        }
+
         this.tree.read({
-            roots: [data]
+            roots: data
         });
     }
 
     render(){
-        setTimeout(this.renderDependencyTree.bind(this), 1000);
+        /*setTimeout(this.renderDependencyTree.bind(this), 1000);
         setTimeout(()=>{
             this.renderData({'name' : 'roota', children : [{'name' : 'balala'}] });
         }, 6000);
 
         setTimeout(()=>{
             this.renderData(this.state.dependencyTreeData);
-        }, 3000);
+        }, 3000);*/
         
         return (<div id="dependencyTreeCanvas" style={{width : "100%", height : "100%"}}></div>);
     }
