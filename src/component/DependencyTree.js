@@ -65,6 +65,7 @@ class DependencyTree extends Component{
                 //height: window.innerHeight, // 画布高
                 layout: layout,
                 fitView: 'autoZoom',
+                fitViewPadding: 100,
                 plugins: [
                     new FisheyePlugin({radius: 200})     
                 ],

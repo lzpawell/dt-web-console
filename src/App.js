@@ -5,16 +5,18 @@ import { HashRouter, Route, Link, Switch,Redirect } from 'react-router-dom';
 import JobManagement from './component/JobManagement';
 import JobDependencyManagement from './component/JobDependencyManagement';
 import AppTitle from './component/AppTitle';
+import AppPermission from './component/Permission';
 
 const { SubMenu } = Menu;
 const { Header, Content, Sider } = Layout;
 
 class App extends Component {
   state = {
-    envirment: "日常环境",
-    contentHint: undefined,
-    contentPage: undefined,
-    activeApp: undefined
+    header : {
+      envirment: "日常环境",
+      activeApp: undefined,
+      userId : "awell",
+    }
   };
 
   onEnvirmentChange(envirment) {
@@ -40,6 +42,12 @@ class App extends Component {
     </Breadcrumb>
   );
 
+  AppPermission = () => (
+    <Breadcrumb style={{ margin: '7px 0 7px 10px' }}>
+      <Breadcrumb.Item>dt-web-console</Breadcrumb.Item>
+      <Breadcrumb.Item>应用权限管理</Breadcrumb.Item>
+    </Breadcrumb>
+  );
   envirmentMenu = (
     <Menu>
       <Menu.Item>
@@ -76,12 +84,12 @@ class App extends Component {
             <Col ><AppTitle fontSize={24} /></Col>
             <Col >
               <Dropdown overlay={this.envirmentMenu} placement="bottomCenter">
-                <span style={{ color: '#fff', display: 'inline-block', marginLeft: '30px' }}>{this.state.envirment}</span>
+                <span style={{ color: '#fff', display: 'inline-block', marginLeft: '30px' }}>{this.state.header.envirment}</span>
               </Dropdown>
             </Col>
             <Col >
               <Dropdown overlay={this.applist} placement="bottomCenter" style={{ margin: "200" }}>
-                <span style={{ color: '#fff', display: 'inline-block', marginLeft: '30px' }}>{this.state.activeApp == undefined ? "请选择App" : this.state.activeApp}</span>
+                <span style={{ color: '#fff', display: 'inline-block', marginLeft: '30px' }}>{this.state.header.activeApp == undefined ? "请选择App" : this.state.activeApp}</span>
               </Dropdown>
             </Col>
           </Row>
@@ -93,17 +101,20 @@ class App extends Component {
               <Menu style={{ height: '100%', borderRight: 0 }}>
                 <Menu.Item key="1" ><Link to="/jobManagement">job管理</Link></Menu.Item>
                 <Menu.Item key="2" ><Link to="/jobDependencyManagement">job依赖</Link></Menu.Item>
+                <Menu.Item key="3" ><Link to="/appPermission">app权限</Link></Menu.Item>
               </Menu>
             </Sider>
             <Layout style={{ paddingLeft: '10px' }}>
               <Switch>
                 <Route exact path="/jobManagement" component={this.JobManagementHint} />
                 <Route exact path="/jobDependencyManagement" component={this.JobDependencyManagementHint} />
+                <Route exact path="/appPermission" component={this.AppPermission} />
               </Switch>
               <Content style={{ background: '#fff', margin: 0, height: '100%' }}>
                 <Switch>
                   <Route exact path="/jobManagement" component={JobManagement}  balal={123} />
                   <Route exact path="/jobDependencyManagement" component={JobDependencyManagement} />
+                  <Route exact path="/appPermission" component={AppPermission} />
                   <Redirect to={{pathname: '/jobManagement',state: { from: this.props.location }}} />
                 </Switch>
               </Content>
