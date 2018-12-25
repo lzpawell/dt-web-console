@@ -112,7 +112,7 @@ class App extends Component {
               </Switch>
               <Content style={{ background: '#fff', margin: 0, height: '100%' }}>
                 <Switch>
-                  <Route exact path="/jobManagement" component={JobManagement}  balal={123} />
+                  <Route exact path="/jobManagement" component={JobManagement}  params={{balala : 'ddd'}} />
                   <Route exact path="/jobDependencyManagement" component={JobDependencyManagement} />
                   <Route exact path="/appPermission" component={AppPermission} />
                   <Redirect to={{pathname: '/jobManagement',state: { from: this.props.location }}} />
