@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import JobList from './JobList';
 import 'antd/dist/antd.css';
 
 class JobManagement extends Component {
@@ -7,6 +8,9 @@ class JobManagement extends Component {
     return (
       <div>
         job management 
+        <div style={{height : 50, background : 'green'}}>
+          这里是
+        </div>
       </div>
     );
   }
