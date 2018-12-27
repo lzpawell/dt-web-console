@@ -20,7 +20,10 @@ const AppRegistryForm = Form.create()(
                     title="注册App"
                     okText="注册"
                     cancelText="取消"
-                    onCancel={onCancel}
+                    onCancel={()=>{
+                        this.props.form.resetFields();
+                        onCancel();
+                    }}
                     onOk={onRegistry}
                 >
                     <Form layout="vertical">

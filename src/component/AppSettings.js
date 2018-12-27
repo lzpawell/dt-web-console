@@ -19,7 +19,10 @@ const AddUserPermissionForm = Form.create()(
                     title="增加用户权限"
                     okText="增加"
                     cancelText="取消"
-                    onCancel={onCancel}
+                    onCancel={()=>{
+                        this.props.form.resetFields();
+                        onCancel();
+                    }}
                     onOk={onCreate}
                 >
                     <Form layout="vertical">
@@ -104,7 +107,6 @@ class PermissionTable extends React.Component {
             title: 'userId',
             dataIndex: 'userId',
             width: '30%',
-            editable: true,
         }, {
             title: '权限',
             dataIndex: 'permission',
@@ -179,8 +181,11 @@ class MetaDataTable extends React.Component {
             title: 'appName',
             dataIndex: 'appName',
             width: '20%',
-            editable: true,
         }, {
+            title : '我的应用权限',
+            dataIndex: 'permission',
+            width : '20%',
+        },{
             title: 'access-key',
             dataIndex: 'key',
             width: '40%',
@@ -201,8 +206,9 @@ class MetaDataTable extends React.Component {
         this.state = {
             dataSource: [{
                 key: '0',
-                appName: 'cbop',
+                appName: 'app1',
                 key: 'salkngl-ldsngd-slgk-dlngdk',
+                permission : 'owner'
             }],
         };
     }

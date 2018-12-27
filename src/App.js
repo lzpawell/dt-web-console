@@ -12,12 +12,16 @@ const { SubMenu } = Menu;
 const { Header, Content, Sider } = Layout;
 
 class App extends Component {
-  state = {
-    envirment: "日常环境",
-    activeApp: undefined,
-    userId: "awell",
-    appRegistryDialogVisiable: false
-  };
+
+  constructor(props){
+    super(props);
+    this.state = {
+      envirment: "日常环境",
+      activeApp: undefined,
+      userId: "awell",
+      appRegistryDialogVisiable: false
+    }
+  }
 
   onEnvirmentChange(envirment) {
     this.setState({ envirment });
@@ -87,7 +91,7 @@ class App extends Component {
   // mode="horizontal" style={{ lineHeight: '64px' }}
   render() {
     return (
-      <div>
+      <div style={{height : '100%'}}>
         <AppRegistryDialog visible={this.state.appRegistryDialogVisiable} onRegistrySuccess={(newAppName) => { 
           console.log('ddsdsdf') 
           //TODO: 将activeApp改为新的appName

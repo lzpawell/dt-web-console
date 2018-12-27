@@ -6,11 +6,8 @@ class JobManagement extends Component {
   render() {
     console.log(this.props);
     return (
-      <div>
-        job management 
-        <div style={{height : 50, background : 'green'}}>
-          这里是
-        </div>
+      <div style={{marginLeft : 10, marginRight : 10}}>
+        <JobList />
       </div>
     );
   }
